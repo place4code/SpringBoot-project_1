@@ -3,6 +3,7 @@ package com.place4code.springboot.crud_1.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ import com.place4code.springboot.crud_1.entity.Employee;
 public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
+	@Qualifier("employeeDAOJpaImpl")
 	EmployeeDAO employeeDAO;
 	
 	@Override
