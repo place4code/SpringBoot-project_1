@@ -1,48 +1,48 @@
 package com.place4code.springboot.crud_1.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.place4code.springboot.crud_1.dao.EmployeeDAO;
+
+import com.place4code.springboot.crud_1.dao.EmployeeRepository;
 import com.place4code.springboot.crud_1.entity.Employee;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
 	@Autowired
-	@Qualifier("employeeDAOJpaImpl")
-	EmployeeDAO employeeDAO;
+	EmployeeRepository employeeRepository;
 	
 	@Override
-	@Transactional
 	public List<Employee> getAll() {
-		// TODO Auto-generated method stub
-		return employeeDAO.getAll();
+		return employeeRepository.findAll();
 	}
 
 	@Override
-	@Transactional
 	public Employee findById(int id) {
-		// TODO Auto-generated method stub
-		return employeeDAO.findById(id);
+
+		//find employee
+		Optional<Employee> result = employeeRepository.findById(id);
+		
+		//employee exists
+		if(result.isPresent()) return result.get();
+		
+		//employee doesn't exist
+		throw new RuntimeException("Didn't find with id: " + id);
+		
 	}
 
 	@Override
-	@Transactional
 	public void save(Employee employee) {
-		// TODO Auto-generated method stub
-		employeeDAO.save(employee);
+		employeeRepository.save(employee);
 	}
 
 	@Override
-	@Transactional
 	public void deleteById(int id) {
-		// TODO Auto-generated method stub
-		employeeDAO.deleteById(id);
+		employeeRepository.deleteById(id);
 	}
 
 }
